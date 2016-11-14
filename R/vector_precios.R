@@ -1,5 +1,5 @@
 vector_precios <- function(file_path) {
-  vector <- read_delim(
+  vector <- readr::read_delim(
     file = file_path,
     delim = "|",
     col_types = cols(

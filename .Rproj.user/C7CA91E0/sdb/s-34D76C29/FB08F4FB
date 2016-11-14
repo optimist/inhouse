@@ -1,0 +1,17 @@
+{
+    "contents" : "asset_id <- function(tipo, emisora, serie) {\n  tipo[nchar(tipo) == 1] <- paste0(tipo[nchar(tipo) == 1], \"_\")\n  id <- tolower(paste0(tipo, emisora, serie))\n  id <- gsub(\"\\\\*|\\\\+|\\\\-\", \"_\", id)\n  id\n}\n",
+    "created" : 1479155236324.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "750181894",
+    "id" : "FB08F4FB",
+    "lastKnownWriteTime" : 1476716984,
+    "path" : "C:/Github/inhouse/R/utils.R",
+    "project_path" : "R/utils.R",
+    "properties" : {
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

@@ -1,16 +1,10 @@
-library(xts)
-library(RMySQL)
-library(tidyr)
-library(dplyr)
-
 create_pos <- function(date, contrato = NULL){
-  con <- dbConnect(RMySQL::MySQL(), host='CISM21', username="cism", password="cism", dbname="portafolio")
+  con <- DBI::dbConnect(RMySQL::MySQL(), host='CISM21', username="cism", password="cism", dbname="portafolio")
 
   query <- paste("select ",
                  "fecha, carteramodelo, contrato, tot, reporto, tipo, emisora, serie, precio, tit, mon ",
                  "from posiciones where ",
                  "fecha in ('",
-                 paste(date, collapse = "','"),
                  "') ",
                  sep="")
 
@@ -22,8 +16,8 @@ create_pos <- function(date, contrato = NULL){
                    sep="")
   }
 
-  pos <- dbGetQuery(con, query)
-  dbDisconnect(con)
+  pos <- DBI::dbGetQuery(con, query)
+  DBI::dbDisconnect(con)
 
   pos <- pos %>%
     #as date
@@ -46,13 +40,13 @@ create_pos <- function(date, contrato = NULL){
 }
 
 create_bloq <- function(date){
-  con <- dbConnect(RMySQL::MySQL(), host='CISM21', username="cism", password="cism", dbname="portafolio")
+  con <- DBI::dbConnect(RMySQL::MySQL(), host='CISM21', username="cism", password="cism", dbname="portafolio")
   query <- paste("select ",
                  "fecha, carteramodelo, contrato, tipo, emisora, serie, tit, mon ",
                  "from posicionbloqueada where fecha in ('",
                  paste(date, collapse = "','"),
                  "')", sep="")
-  bloq <- dbGetQuery(con, query)
+  bloq <- DBI::dbGetQuery(con, query)
 
   bloq %>%
     #as date

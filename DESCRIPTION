@@ -5,7 +5,9 @@ Version: 0.1
 Date: 2016-11-14
 Author: Who wrote it
 Imports:
-  Rcpp,
+  xts,
+  DBI,
+  RMySQL,
   dplyr,
   tidyr,
   readr
