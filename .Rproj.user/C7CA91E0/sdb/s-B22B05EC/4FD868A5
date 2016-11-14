@@ -1,0 +1,17 @@
+{
+    "contents" : "Package: inhouse\nType: Package\nTitle: What the Package Does (Title Case)\nVersion: 0.1\nDepends:\n  readr,\n  dplyr,\n  tidyr\nDate: 2016-11-14\nAuthor: Who wrote it\nMaintainer: Who to complain to <yourfault@somewhere.net>\nDescription: More about what it does (maybe more than one line)\nLicense: What license is it under?\nLazyData: TRUE\n",
+    "created" : 1479152549666.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1384412398",
+    "id" : "4FD868A5",
+    "lastKnownWriteTime" : 1479152713,
+    "path" : "C:/Github/inhouse/DESCRIPTION",
+    "project_path" : "DESCRIPTION",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "dcf"
+}
