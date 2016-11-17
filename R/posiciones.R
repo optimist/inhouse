@@ -33,7 +33,6 @@ create_pos <- function(date, contrato = NULL){
     group_by(fecha, carteramodelo, contrato, tot, id, reporto, tipo, emisora, serie, precio) %>%
     summarise(tit = sum(tit), mon = sum(mon)) %>%
     as.data.frame()
-  print(pos)
   pos$tit[pos$emisora=="EFECTIVO"] <- pos$mon[pos$emisora=="EFECTIVO"]
   pos[pos$tit > 0, ]
 }

@@ -1,1 +1,5 @@
+# patron de las funciones que seran exportadas
+exportPattern("^[[:alpha:]]+")
+
+# necesitamos todos los nombres de dplyr y la funcion %>% de magrittr que ya viene en dplyr
 import(dplyr)
