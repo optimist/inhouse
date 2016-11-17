@@ -5,6 +5,7 @@ create_pos <- function(date, contrato = NULL){
                  "fecha, carteramodelo, contrato, tot, reporto, tipo, emisora, serie, precio, tit, mon ",
                  "from posiciones where ",
                  "fecha in ('",
+                 paste(date, collapse = "','"),
                  "') ",
                  sep="")
 
@@ -15,10 +16,8 @@ create_pos <- function(date, contrato = NULL){
                    "') ",
                    sep="")
   }
-
   pos <- DBI::dbGetQuery(con, query)
   DBI::dbDisconnect(con)
-
   pos <- pos %>%
     #as date
     mutate(fecha = as.Date(fecha)) %>%
@@ -34,7 +33,7 @@ create_pos <- function(date, contrato = NULL){
     group_by(fecha, carteramodelo, contrato, tot, id, reporto, tipo, emisora, serie, precio) %>%
     summarise(tit = sum(tit), mon = sum(mon)) %>%
     as.data.frame()
-
+  print(pos)
   pos$tit[pos$emisora=="EFECTIVO"] <- pos$mon[pos$emisora=="EFECTIVO"]
   pos[pos$tit > 0, ]
 }

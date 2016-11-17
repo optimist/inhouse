@@ -5,11 +5,10 @@ Version: 0.1
 Date: 2016-11-14
 Author: Who wrote it
 Imports:
+  dplyr,
   xts,
   DBI,
   RMySQL,
-  dplyr,
-  tidyr,
   readr
 Maintainer: Who to complain to <yourfault@somewhere.net>
 Description: More about what it does (maybe more than one line)
