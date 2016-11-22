@@ -1,5 +1,10 @@
-create_pos <- function(date, contrato = NULL){
-  con <- DBI::dbConnect(RMySQL::MySQL(), host='CISM21', username="cism", password="cism", dbname="portafolio")
+#' Crates holdings data from sql database 'posiciones'
+#'
+#' Creates a mysql query for the selected dates and contrato
+#'
+#' This function will a data.frame from one or serveral dates, when no contrato is given, it will fetch
+get_holdings <- function(date, contrato = NULL){
+  con <- DBIConnect(RMySQL::MySQL(), host='CISM21', username="cism", password="cism", dbname="portafolio")
 
   query <- paste("select ",
                  "fecha, carteramodelo, contrato, tot, reporto, tipo, emisora, serie, precio, tit, mon ",
@@ -16,8 +21,8 @@ create_pos <- function(date, contrato = NULL){
                    "') ",
                    sep="")
   }
-  pos <- DBI::dbGetQuery(con, query)
-  DBI::dbDisconnect(con)
+  pos <- DBIGetQuery(con, query)
+  DBIDisconnect(con)
   pos <- pos %>%
     #as date
     mutate(fecha = as.Date(fecha)) %>%
@@ -37,14 +42,14 @@ create_pos <- function(date, contrato = NULL){
   pos[pos$tit > 0, ]
 }
 
-create_bloq <- function(date){
-  con <- DBI::dbConnect(RMySQL::MySQL(), host='CISM21', username="cism", password="cism", dbname="portafolio")
+get_blocked_holdings <- function(date){
+  con <- DBIConnect(RMySQL::MySQL(), host='CISM21', username="cism", password="cism", dbname="portafolio")
   query <- paste("select ",
                  "fecha, carteramodelo, contrato, tipo, emisora, serie, tit, mon ",
                  "from posicionbloqueada where fecha in ('",
                  paste(date, collapse = "','"),
                  "')", sep="")
-  bloq <- DBI::dbGetQuery(con, query)
+  bloq <- DBIGetQuery(con, query)
 
   bloq %>%
     #as date
@@ -54,7 +59,7 @@ create_bloq <- function(date){
     as.data.frame()
 }
 
-rm_bloq.pos <- function(pos, bloq) {
+remove_blocked_holdings <- function(pos, bloq) {
   pos_key <- paste(pos$fecha, pos$contrato, pos$id)
   bloq_key <- paste(bloq$fecha, bloq$contrato, bloq$id)
   bloq_idx <- match(pos_key, bloq_key)
