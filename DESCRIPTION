@@ -1,16 +1,11 @@
 Package: inhouse
 Type: Package
-Title: What the Package Does (Title Case)
+Title: In-house all-purpose functions used at CI Estrategias
 Version: 0.1
 Date: 2016-11-14
-Author: Who wrote it
-Imports:
-  dplyr,
-  xts,
-  DBI,
-  RMySQL,
-  readr
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: Mauricio B. Garcia Tec
+Imports: dplyr (>= 0.5), xts (>= 0.9), RMySQL (>= 0.1), readr (>= 1.0), tidyr (>= 0.5)
+Maintainer: Mauricio B. Garcia Tec <mgarciat@cism.mx>
+Description: Creates a series of all-purpose function to handle price and holdings data at CI Estrategias.
 LazyData: TRUE
+RoxygenNote: 5.0.1
