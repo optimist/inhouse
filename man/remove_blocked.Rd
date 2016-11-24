@@ -10,7 +10,7 @@ remove_blocked(position, blocked)
 \item{position}{A data.frame containing the full holdings information.
 It is assumed to be generated with the function \code{\link{get_position}}}
 
-\item{blocked}{A data.frame containing the full holdings information.
+\item{blocked}{A data.frame containing the full holdings information
 It is assumed to be generated with the function \code{\link{get_blocked_position}}}
 }
 \value{
@@ -22,7 +22,7 @@ Remove all the holdings that are blocked from holdings data
 }
 \details{
 This function will match the entries of a data frame representing blocked holdings and remove the corresponding titles
-and valuation from another data frame containing the full position.
+and valuation from another data frame containing the full position
 }
 \examples{
 date <- "2016-08-31"

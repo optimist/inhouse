@@ -19,7 +19,8 @@ strategy below the selected cut value
 Finds the holdings that have median below cut (defaults to zero) among clientes with the same strategy
 }
 \details{
-The function computes the median percentage of the total holdings for each strategy and returns those with median below cut
+The function computes the median percentage of the total holdings for each strategy and the filters the full
+holdings information to return whose median is below the cut
 }
 \examples{
 find_rare_position(get_position("2015-12-31"))

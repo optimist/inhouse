@@ -4,10 +4,10 @@
 \alias{get_position}
 \title{Fetch holdings data}
 \usage{
-get_position(date, contrato = NULL)
+get_position(fecha, contrato = NULL)
 }
 \arguments{
-\item{date}{A vector of dates that can be of class character or Date but is expected to be in the format aaaa-mm-dd}
+\item{fecha}{A vector of dates that can be of class character or Date but is expected to be in the format aaaa-mm-dd}
 
 \item{contrato}{A character or integer vector with the number of contratos}
 }
@@ -18,8 +18,8 @@ A data.frame with the holding of the given contratos in the selected dates. If n
 Construct a mysql query for the selected dates and contrato and sends it to the sql database posiciones
 }
 \details{
-This function will return a data.frame with holdings information from one or several dates.
-When no contrato is given, it will fetch the information of every contrato.
+This function will return a data.frame with holdings information from one or several dates
+When no contrato is given, it will fetch the information of every contrato
 }
 \examples{
 get_position("2015-12-31")

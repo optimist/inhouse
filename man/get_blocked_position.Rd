@@ -4,12 +4,12 @@
 \alias{get_blocked_position}
 \title{Fetch blocked holdings data}
 \usage{
-get_blocked_position(date, contrato = NULL)
+get_blocked_position(fecha, contrato = NULL)
 }
 \arguments{
-\item{date}{A vector of dates that can be of class character or Date but is expected to be in the format aaaa-mm-dd}
-
 \item{contrato}{A character or integer vector with the number of contratos}
+
+\item{date}{A vector of dates that can be of class character or Date but is expected to be in the format aaaa-mm-dd}
 }
 \value{
 A data.frame with the holding of the given contratos in the selected dates. If no contrato is given, it will return
@@ -20,8 +20,8 @@ Construct a mysql query for the selected dates and contrato and sends it to the 
 }
 \details{
 Blocked holdings are those cannot be rebalanced since they belong to client decisions outsided our investment strategies.
-This function will return a data.frame with blocked holdings information from one or several dates.
-When no contrato is given, it will fetch the information of every contrato.
+This function will return a data.frame with blocked holdings information from one or several dates
+When no contrato is given, it will fetch the information of every contrato
 }
 \examples{
 get_blocked_position("2015-12-31")
