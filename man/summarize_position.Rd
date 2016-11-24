@@ -2,10 +2,8 @@
 % Please edit documentation in R/posiciones.R
 \name{summarize_position}
 \alias{summarize_position}
-\title{Summary statistics for holdings data per investment strategy}
+\title{Summary statistics for holdings data}
 \usage{
-summarize_position(position, groups = c("fecha", "carteramodelo", "id"), ...)
-
 summarize_position(position, groups = c("fecha", "carteramodelo", "id"), ...)
 }
 \arguments{
@@ -15,22 +13,11 @@ summarize_position(position, groups = c("fecha", "carteramodelo", "id"), ...)
 Variable names must be quoted (an inconvenience used to avoid confusion with the commands passed to \code{\link{summarize}}).
 If no grouping is desired then it can be set to NULL}
 
-\item{...}{Commands to be passed to \code{\link{summarize}} for computing statistics within groups}
-
-\item{position}{A data.frame object containing holdings information. It is assumed to be generated using \code{\link{get_position}}}
-
-\item{...}{Commands to be passed to \code{\link{summarize}} from \code{\link{dplyr}} for computing statistics within groups}
+\item{...}{Commands to be passed to \code{\link{summarize}} from \code{\link{dplyr}} for computing statistics within groups
+#' @details The function will group by investment strategy (carteramodelo), date and asset id and compute
+basic summary statistics and any other command specified by the user.}
 }
 \value{
-A data.frame object with the summary statistics. By default it returns a data.frame indicating the group and columns
-\itemize{
-  \item{\strong{sum_mon}:} {The sum of the valuation of the group}
-  \item{\strong{perc_median}:} {The median of the percentage of the total valuation}
-  \item{\strong{perc_mean}:} {The mean of the percentage of the total valuation}
-  \item{\strong{perc_sd}:} {The standard deviation of the percentage of the total valuation}
-  \item{}{The result of additional commands supplied by the user}
-}
-
 A data.frame object with the summary statistics. By default it returns a data.frame indicating the group and columns
 \itemize{
   \item{\strong{sum_mon}:} {The sum of the valuation of the group}
@@ -42,16 +29,8 @@ A data.frame object with the summary statistics. By default it returns a data.fr
 }
 \description{
 Compute basic summary statistics for holdings data for each strategy, date and id
-
-Compute basic summary statistics for holdings data for each strategy, date and id
-}
-\details{
-The function will group by investment strategy (carteramodelo), date and asset id and compute basic summary statistics and any other command specified by the user.
-
-The function will group by investment strategy (carteramodelo), date and asset id and compute basic summary statistics and any other command specified by the user.
 }
 \examples{
-summarize_within_groups(get_position("2015-12-31"), perc_q1 = quantile(perc, .25))
 position <- get_position(fecha = c("2016-07-28", "2016-07-29"))
 summarize_position(position, groups = c("fecha", "carteramodelo", "id"), count = length(contrato))
 summarize_position(position, groups = NULL)
