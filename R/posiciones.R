@@ -50,8 +50,9 @@ get_position <- function(fecha, contrato = NULL){
     summarise(tit = sum(tit), mon = sum(mon)) %>%
     mutate(perc = mon/tot) %>%
     as.data.frame()
-  pos$tit[pos$emisora=="EFECTIVO"] <- pos$mon[pos$emisora=="EFECTIVO"]
-  pos[pos$tit > 0, ]
+  pos$tit[pos$emisora=="EFECTIVO"] <- pos$mon[pos$emisora=="EFECTIVO"] # causaba incorrecta suma del total de valuacion
+  pos$tit[pos$emisora=="REPORTO"] <- pos$mon[pos$emisora=="REPORTO"] # causaba incorrecta suma del total de valuacion
+  pos[pos$tit != 0, ]
 }
 
 #' @title Fetch blocked holdings data
@@ -73,6 +74,13 @@ get_blocked_position <- function(fecha, contrato = NULL){
                  "from posicionbloqueada where fecha in ('",
                  paste(fecha, collapse = "','"),
                  "')", sep="")
+  if(!is.null(contrato)) {
+    query <- paste(query,
+                   "and contrato in ('",
+                   paste(contrato, collapse ="','"),
+                   "') ",
+                   sep="")
+  }
   bloq <- DBI::dbGetQuery(con, query)
 
   bloq <- bloq %>%
@@ -104,7 +112,7 @@ get_blocked_position <- function(fecha, contrato = NULL){
 #' date <- "2016-08-31"
 #' pos <- get_position(date)
 #' bl <- get_blocked_position(date)
-#' unbl <- rm_blocked(pos, bl)
+#' unbl <- remove_blocked(pos, bl)
 #' head(unbl)
 #' @export
 remove_blocked <- function(position, blocked) {
@@ -122,8 +130,8 @@ remove_blocked <- function(position, blocked) {
   position %>%
     group_by(contrato) %>%
     mutate(tot=sum(mon)) %>%
-    mutate(perc = mon/tot)
-  as.data.frame()
+    mutate(perc = mon/tot) %>%
+    as.data.frame()
 }
 
 #' @title Find uncommon holdings
@@ -210,9 +218,13 @@ clean_position <- function(position) {
 #' @export
 summarize_position <- function(position, groups = c("fecha", "carteramodelo", "id"), ...) {
   if (!is.null(groups)) {
-    position <- position %>% group_by_(.dots = lapply(paste0("~", groups), as.formula))
+    position <- position %>%
+      group_by_(.dots = lapply(paste0("~", groups), as.formula))
   }
   position %>%
+    tidyr::complete(tidyr::nesting(contrato, tot),
+                    tidyr:: nesting(id, reporto, tipo, emisora, serie),
+             fill = list(tit=0, mon = 0)) %>%
     summarize(sum_mon = sum(mon), perc_median = median(perc), perc_mean = mean(perc), perc_sd = sd(perc), ...)  %>%
     as.data.frame()
 }

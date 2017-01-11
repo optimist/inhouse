@@ -28,7 +28,7 @@ and valuation from another data frame containing the full position
 date <- "2016-08-31"
 pos <- get_position(date)
 bl <- get_blocked_position(date)
-unbl <- rm_blocked(pos, bl)
+unbl <- remove_blocked(pos, bl)
 head(unbl)
 }
 

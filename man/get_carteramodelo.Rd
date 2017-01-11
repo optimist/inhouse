@@ -4,7 +4,7 @@
 \alias{get_carteramodelo}
 \title{Fetch cartera modelo}
 \usage{
-get_carteramodelo(fecha, contrato = NULL)
+get_carteramodelo(fecha)
 }
 \arguments{
 \item{fecha}{A vector of dates that can be of class character or Date but is expected to be in the format aaaa-mm-dd}
@@ -21,5 +21,10 @@ This function will return a data.frame with cartera modelo (strategy objetive co
 \examples{
 fecha <- seq(as.Date("2015-12-31"), as.Date("2016-01-31"), by = 1)
 get_carteramodelo(fecha)
+get_carteramodelo(fecha)  \%>\%
+   filter(grupo == "CG-CM-TESTIGO-RV-LOCAL")  \%>\%
+   select(fecha, id, participacion) \%>\%
+   tidyr::spread(id, participacion) \%>\%
+   head()
 }
 

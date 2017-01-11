@@ -65,3 +65,25 @@ map <- function(x, origin, target, replace_missing = FALSE) {
   }
   x_new
 }
+
+#' @title Convenient date sequences
+#' @description A wrapper for seq.Date in more convenient form
+#' @param period A character of the form 'date1/date2', where the date1 and date2 are converted do Date objects using \code{lubridate}.
+#' @param by an integer specifying the space between dates in the sequence
+#' @details A convenient wrapper for seq.date that does not requite tu input Dates and accepts other date formats using \code{ymd} from \code{lubridate}.
+#' The syntax is inspired on the indexing format of xts objects.
+#' @return A sequence of dates
+#' @examples
+#' date_seq("20151231/")
+#' date_seq("20151231/20161130", by = 2)
+#' @export
+date_seq <- function(period, by = 1) {
+  fromto <- unlist(strsplit(period, "/"))
+  if(length(fromto) == 1) {
+    fromto[2] <- as.character(Sys.Date())
+  }
+  seq.Date(from = lubridate::ymd(fromto[1]), to = lubridate::ymd(fromto[2]), by = by)
+}
+
+
+

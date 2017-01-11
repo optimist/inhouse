@@ -11,8 +11,13 @@ magrittr::`%>%`
 #' @examples
 #' fecha <- seq(as.Date("2015-12-31"), as.Date("2016-01-31"), by = 1)
 #' get_carteramodelo(fecha)
+#' get_carteramodelo(fecha)  %>%
+#'    filter(grupo == "CG-CM-TESTIGO-RV-LOCAL")  %>%
+#'    select(fecha, id, participacion) %>%
+#'    tidyr::spread(id, participacion) %>%
+#'    head()
 #' @export
-get_carteramodelo <- function(fecha, contrato = NULL){
+get_carteramodelo <- function(fecha){
   con <- DBI::dbConnect(RMySQL::MySQL(), host='CISM21', username="cism", password="cism", dbname="portafolio")
 
   query <- paste("select * from carteramodelo where ",
@@ -27,12 +32,12 @@ get_carteramodelo <- function(fecha, contrato = NULL){
     as.data.frame() %>%
     mutate(tipo = sapply(strsplit(instrumento, "/"), function(x) x[[1]])) %>%
     mutate(emisora = sapply(strsplit(instrumento, "/"), function(x) x[[2]])) %>%
-    mutate(serie = sapply(strsplit(instrumento, "/"), function(x) x[[1]])) %>%
+    mutate(serie = sapply(strsplit(instrumento, "/"), function(x) x[[3]])) %>%
     mutate(id = asset_id(tipo, emisora, serie)) %>%
     #repo
-    mutate(tipo = replace(tipo, id == "repguberrep", "")) %>%
-    mutate(emisora = replace(tipo, id == "repguberrep", "reporto")) %>%
-    mutate(serie = replace(tipo, id == "repguberrep", "")) %>%
-    mutate(id = replace(tipo, id == "repguberrep", "reporto")) %>%
+    mutate(tipo = replace(tipo, id == "repguber_", "")) %>%
+    mutate(emisora = replace(emisora, id == "repguber_", "reporto")) %>%
+    mutate(serie = replace(serie, id == "repguber_", "")) %>%
+    mutate(id = replace(id, id == "repguber_", "reporto")) %>%
     as.data.frame()
 }
