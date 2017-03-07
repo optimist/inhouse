@@ -27,4 +27,3 @@ clean_position(get_position("2015-12-31"))
 \seealso{
 \code{\link{find_rare_position}}
 }
-

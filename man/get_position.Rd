@@ -25,4 +25,3 @@ When no contrato is given, it will fetch the information of every contrato
 get_position("2015-12-31")
 get_position("2015-12-31", contrato = "25774")
 }
-

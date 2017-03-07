@@ -26,4 +26,3 @@ When no contrato is given, it will fetch the information of every contrato
 \examples{
 get_blocked_position("2015-12-31")
 }
-

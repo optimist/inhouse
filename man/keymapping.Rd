@@ -28,4 +28,3 @@ carteras modelo, id's or emisoras. This function maps \code{origin -> target} fo
 keymapping(1:6, c(2,3), c(-1, -2))
 keymapping(1:6, c(2,3), c(-1, -2), replace_missing = NA)
 }
-

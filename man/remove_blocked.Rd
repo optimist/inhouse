@@ -31,4 +31,3 @@ bl <- get_blocked_position(date)
 unbl <- remove_blocked(pos, bl)
 head(unbl)
 }
-

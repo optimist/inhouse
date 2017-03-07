@@ -17,6 +17,7 @@ magrittr::`%>%`
 #'    tidyr::spread(id, participacion) %>%
 #'    head()
 #' @export
+
 get_carteramodelo <- function(fecha){
   con <- DBI::dbConnect(RMySQL::MySQL(), host='CISM21', username="cism", password="cism", dbname="portafolio")
 

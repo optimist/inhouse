@@ -27,4 +27,3 @@ get_carteramodelo(fecha)  \%>\%
    tidyr::spread(id, participacion) \%>\%
    head()
 }
-

@@ -26,4 +26,3 @@ of each date's valuation and its previous valuation indicated by the column name
 pos <- get_position(c("2015-12-31", "2016-01-04", "2016-01-05"), contrato = c("25774", "25773"))
 get_position_returns(pos)
 }
-

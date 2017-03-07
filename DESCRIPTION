@@ -6,13 +6,18 @@ Date: 2016-11-14
 Author: Mauricio B. Garcia Tec, Michelle Audirac
 Imports: 
   dplyr, 
+  tidyquant,
+  PerformanceAnalytics,
   xts,
   RMySQL, 
   readr, 
+  tibble,
   tidyr, 
   lubridate, 
   stringr 
+Suggests: dplyr, tidyquant
+Extends: tidyquant
 Maintainer: Mauricio B. Garcia Tec <mgarciat@cism.mx>
 Description: Creates a series of all-purpose function to handle price and holdings data at CI Estrategias.
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

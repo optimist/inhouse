@@ -4,7 +4,7 @@
 \alias{summarize_position}
 \title{Summary statistics for holdings data}
 \usage{
-summarize_position(position, groups = c("fecha", "carteramodelo", "id"), ...)
+summarize_position(position, groups = NULL, ...)
 }
 \arguments{
 \item{position}{A data.frame object containing holdings information. It is assumed to be generated using \code{\link{get_position}}}
@@ -35,4 +35,3 @@ position <- get_position(fecha = c("2016-07-28", "2016-07-29"))
 summarize_position(position, groups = c("fecha", "carteramodelo", "id"), count = length(contrato))
 summarize_position(position, groups = NULL)
 }
-

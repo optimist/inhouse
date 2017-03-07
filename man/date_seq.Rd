@@ -25,4 +25,3 @@ The syntax is inspired on the indexing format of xts objects.
 date_seq("20151231/")
 date_seq("20151231/20161130", by = 2)
 }
-

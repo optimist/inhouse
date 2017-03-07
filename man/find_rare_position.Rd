@@ -25,4 +25,3 @@ holdings information to return whose median is below the cut
 \examples{
 find_rare_position(get_position("2015-12-31"))
 }
-

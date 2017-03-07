@@ -19,4 +19,3 @@ Generate the full list of available ids from Amazon
 price_ids()
 price_ids("2015-12-31")
 }
-

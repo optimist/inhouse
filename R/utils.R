@@ -15,6 +15,21 @@ asset_id <- function(tipo, emisora, serie) {
   id
 }
 
+#' @title Split string  by symbol
+#' @description Splits a string by a symbol, trims whitespace and unlists
+#' @param x single string
+#' @param sep symbol to split, defaults to ','
+#' @return x splitted and unlisted into vector
+#' @seealso \link{str_split}
+#' @examples
+#' spl("SPY,SHV")
+#' @export
+spl <- function(x, sep =",") {
+  if (length(x) != 1) stop("x must have length 1")
+  gsub("[ ]+", "", unlist(stringr::str_split(x, pattern = sep)))
+}
+
+
 #' @title Map a variable
 #' @description Sometimes we need to map one vector into another. For inhouse data it can be useful when defining categories for
 #' carteras modelo, id's or emisoras. This function maps \code{origin -> target} for every value of x.
@@ -58,6 +73,22 @@ date_seq <- function(period, by = 1) {
     fromto[2] <- as.character(Sys.Date())
   }
   seq.Date(from = lubridate::ymd(fromto[1]), to = lubridate::ymd(fromto[2]), by = by)
+}
+
+
+#' @title Fill data frame
+#' @description Fills missing data in convenient form for Finance
+#' @param fill_missing_init A boolean indicating whether starting missing values should be copied to first actual value
+#' @return Filled data frame
+#' @examples
+#' price_fill(tq_get_wide("SPY,MXN=X"))
+#' @export
+fill_prices <- function(df, fill_missing_init = TRUE) {
+  filled_df <- tidyr::fill_(df, names(df)[-1], .direction = "down")
+  if (fill_missing_init) {
+    filled_df <- tidyr::fill_(filled_df, names(filled_df)[-1], .direction = "up")
+  }
+  filled_df
 }
 
 

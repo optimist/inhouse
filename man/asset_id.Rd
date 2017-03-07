@@ -23,4 +23,3 @@ if they are not, it will not neccesarily yield an error but undesired results ma
 \examples{
 asset_id("M", "BONOS", "191211")
 }
-

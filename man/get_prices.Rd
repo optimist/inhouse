@@ -23,4 +23,3 @@ This function will return a data.frame with a column per id and date rows
 \examples{
 get_prices(date_seq("2015-12-31/"), c("1ispy_", "1ishv_"))
 }
-
