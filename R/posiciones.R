@@ -21,7 +21,7 @@ get_position <- function(fecha, contrato = NULL){
                  "fecha, carteramodelo, contrato, tot, reporto, tipo, emisora, serie, precio, tit, mon ",
                  "from posiciones where ",
                  "fecha in ('",
-                 paste(fecha, collapse = "','"),
+                 paste(lubridate::ymd(fecha), collapse = "','"),
                  "') ",
                  sep="")
 
@@ -214,18 +214,21 @@ clean_position <- function(position) {
 #' position <- get_position(fecha = c("2016-07-28", "2016-07-29"))
 #' summarize_position(position, groups = c("fecha", "carteramodelo", "id"), count = length(contrato))
 #' summarize_position(position, groups = NULL)
-#' position <- position %>% map_id()
 #' @export
-summarize_position <- function(position, groups = c("fecha", "carteramodelo", "id"), ...) {
+summarize_position <- function(position, groups = NULL, ...) {
+  position <- position %>%
+    tidyr::complete(
+      tidyr::nesting(fecha, contrato, tot),
+      tidyr:: nesting(id, reporto, tipo, emisora, serie),
+      fill = list(tit=0, mon = 0)
+    ) %>%
+    as.data.frame()
   if (!is.null(groups)) {
     position <- position %>%
       group_by_(.dots = lapply(paste0("~", groups), as.formula))
   }
   position %>%
-    tidyr::complete(tidyr::nesting(contrato, tot),
-                    tidyr:: nesting(id, reporto, tipo, emisora, serie),
-             fill = list(tit=0, mon = 0)) %>%
-    summarize(sum_mon = sum(mon), perc_median = median(perc), perc_mean = mean(perc), perc_sd = sd(perc), ...)  %>%
+    summarize(...)  %>%
     as.data.frame()
 }
 

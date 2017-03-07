@@ -28,7 +28,7 @@ get_prices <- function(fecha, id = NULL){
     mutate(fecha = as.Date(fecha)) %>%
     #repo
     tidyr::spread(id, precio) %>%
-    as.data.frame()
+    data.frame(check.names = FALSE)
 }
 
 #' @title Id list

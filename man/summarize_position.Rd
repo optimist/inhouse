@@ -34,6 +34,5 @@ Compute basic summary statistics for holdings data for each strategy, date and i
 position <- get_position(fecha = c("2016-07-28", "2016-07-29"))
 summarize_position(position, groups = c("fecha", "carteramodelo", "id"), count = length(contrato))
 summarize_position(position, groups = NULL)
-position <- position \%>\% map_id()
 }
 
