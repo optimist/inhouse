@@ -4,7 +4,7 @@
 \alias{get_mercados}
 \title{Fetch asset information data from Amazon}
 \usage{
-get_mercados(id = NULL)
+get_mercados(id = NULL, where = NULL)
 }
 \value{
 A data.frame with the prices of the given ids in the selected dates.

@@ -4,7 +4,7 @@
 \alias{get_prices}
 \title{Fetch price data from Amazon}
 \usage{
-get_prices(fecha, id = NULL)
+get_prices(fecha = NULL, id = NULL)
 }
 \arguments{
 \item{fecha}{A vector of dates that can be of class character or Date but in the format aaaa-mm-dd}

@@ -22,7 +22,7 @@ tq_spread(tbl, type = "close", ...)
 A data frame with the first column as the date and each other column representing a stock and each cell its price.
 }
 \description{
-A method to use with \link{tq_get} from the \link{tidy_quant} package.
+A method to use with \link{tq_get} from the \link{tidyquant} package.
 }
 \details{
 To use only after \code{tq_get}.
