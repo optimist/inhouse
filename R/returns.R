@@ -82,31 +82,31 @@ tq_spread <- function(tbl, type="close", ...) {
   price
 }
 
-
-#' @title Daily returns for wide-form price data
-#' @description Daily returns for wide-form price data
-#' @param df A data frame or xts with price data. If a data frame is given then the first column must include
-#' the dates
-#' @param halflife To be implemented
-#' @param rolling To be implemented
-#' @examples
-#' tq_get(c("SPY", "SHV")) %>% tq_ret()
-#' @return An object of the same class of df with the returns
-#' @export
-tq_dly_ret <- function(tbl, type="close", ...) {
-  if (!(type %in% c("open", "close", "high", "low", "volume", "adjusted"))) {
-    stop('type must be one of "open", "close", "high", "low", "volume", "adjusted"')
-  }
-  price <- tbl
-  if (names(tbl)[1] == "symbol") {
-    price <- price %>%
-      select_(.dots = c("date", "symbol", type)) %>%
-      tidyr::spread(symbol, close) %>%
-      as.data.frame(check.names = FALSE)
-  } else {
-    price <- price %>%
-      select_(.dots = c("date", type)) %>%
-      as.data.frame(check.names = FALSE)
-  }
-  price
-}
+#'
+#' #' @title Daily returns for wide-form price data
+#' #' @description Daily returns for wide-form price data
+#' #' @param df A data frame or xts with price data. If a data frame is given then the first column must include
+#' #' the dates
+#' #' @param halflife To be implemented
+#' #' @param rolling To be implemented
+#' #' @examples
+#' #' tq_get(c("SPY", "SHV")) %>% tq_ret()
+#' #' @return An object of the same class of df with the returns
+#' #' @export
+#' tq_dly_ret <- function(tbl, type="close", ...) {
+#'   if (!(type %in% c("open", "close", "high", "low", "volume", "adjusted"))) {
+#'     stop('type must be one of "open", "close", "high", "low", "volume", "adjusted"')
+#'   }
+#'   price <- tbl
+#'   if (names(tbl)[1] == "symbol") {
+#'     price <- price %>%
+#'       select_(.dots = c("date", "symbol", type)) %>%
+#'       tidyr::spread(symbol, close) %>%
+#'       as.data.frame(check.names = FALSE)
+#'   } else {
+#'     price <- price %>%
+#'       select_(.dots = c("date", type)) %>%
+#'       as.data.frame(check.names = FALSE)
+#'   }
+#'   price
+#' }
