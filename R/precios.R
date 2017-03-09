@@ -12,15 +12,25 @@ magrittr::`%>%`
 #' @examples
 #' get_prices(date_seq("2015-12-31/"), c("1ispy_", "1ishv_"))
 #' @export
-get_prices <- function(fecha, id = NULL){
+get_prices <- function(fecha = NULL, id = NULL){
   con <- DBI::dbConnect(
     drv=RMySQL::MySQL(),
     host="portafolio.c07ss4f9aoi8.us-east-1.rds.amazonaws.com",
     username="cism", password="cism", port=3306, dbname="precios")
-  query <- paste("SELECT fecha, id, precio FROM precios WHERE fecha IN ('", paste(fecha, collapse = "','"), "')")
-  if (!is.null(id)) {
-    query <- paste0(query, " AND id IN ('", paste(id, collapse="','"), "')")
+  query <- paste("SELECT fecha, id, precio FROM precios")
+  if(!is.null(fecha) | !is.null(id)) {
+    query <- paste(query, "WHERE")
+    if(!is.null(fecha)) {
+      query <- paste0(query, " fecha IN ('", paste(fecha, collapse = "','"), "')")
+      if (!is.null(id)) {
+        query <- paste(query, "AND")
+      }
+    }
+    if(!is.null(id)) {
+      query <- paste0(query, " id IN ('", paste(id, collapse="','"), "')")
+    }
   }
+  cat(sprintf("fetching query: %s\n", query))
   prices <- DBI::dbGetQuery(con, query)
   DBI::dbDisconnect(con)
   prices %>%
