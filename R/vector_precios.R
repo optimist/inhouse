@@ -1,5 +1,6 @@
+#' @importFrom readr read_delim
 vector_precios <- function(file_path) {
-  vector <- readr::read_delim(
+  vector <- read_delim(
     file = file_path,
     delim = "|",
     col_types = cols(

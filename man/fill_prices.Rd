@@ -2,11 +2,13 @@
 % Please edit documentation in R/utils.R
 \name{fill_prices}
 \alias{fill_prices}
-\title{Fill data frame}
+\title{Fill data frame or xts}
 \usage{
 fill_prices(df, fill_missing_init = TRUE)
 }
 \arguments{
+\item{df}{data.frame or xts with data to fill}
+
 \item{fill_missing_init}{A boolean indicating whether starting missing values should be copied to first actual value}
 }
 \value{

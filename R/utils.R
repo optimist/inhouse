@@ -1,3 +1,5 @@
+#' @import xts
+
 #' @title Create asset id
 #' @description Creates a unique if from the tipo, emisora, and serie of an asset. Input may be vector but must all have the same length;
 #' if they are not, it will not neccesarily yield an error but undesired results may occur.
@@ -76,20 +78,43 @@ date_seq <- function(period, by = 1) {
 }
 
 
-#' @title Fill data frame
+#' @title Fill data frame or xts
 #' @description Fills missing data in convenient form for Finance
+#' @param df data.frame or xts with data to fill
 #' @param fill_missing_init A boolean indicating whether starting missing values should be copied to first actual value
 #' @return Filled data frame
 #' @examples
 #' price_fill(tq_get_wide("SPY,MXN=X"))
 #' @export
 fill_prices <- function(df, fill_missing_init = TRUE) {
-  filled_df <- tidyr::fill_(df, names(df)[-1], .direction = "down")
+  if (is.xts(df)) {
+    dat <- data.frame(coredata(df))
+  } else {
+    dat <- df
+  }
+  filled_dat <- tidyr::fill_(dat, names(dat), .direction = "down")
   if (fill_missing_init) {
-    filled_df <- tidyr::fill_(filled_df, names(filled_df)[-1], .direction = "up")
+    filled_dat <- tidyr::fill_(filled_dat, names(filled_dat), .direction = "up")
+  }
+  if (is.xts(df)) {
+    filled_df <- df
+    coredata(filled_df) <- as.matrix(filled_dat)
+  } else {
+    filled_df <- filled_dat
   }
   filled_df
 }
 
+#' @title Rolling product for xts
+#' @description Wrapper of RcppRoll::roll_prod
+#' @param x what to roll
+#' @param roll rolling window
+#' @return rolled product of x
+rollProd <- function(x, roll=1) {
+  rollprod <- apply(x+1,2, RcppRoll::roll_prod,n=roll)-1
+  date <- index(x)
+  rollprod <- xts(rollprod, order.by=date[roll:length(date)])
+  return(rollprod)
+}
 
 
