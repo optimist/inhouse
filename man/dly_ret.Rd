@@ -4,13 +4,11 @@
 \alias{dly_ret}
 \title{Daily returns for wide-form price data}
 \usage{
-dly_ret(df, halflife, roll = 1, accumulate = FALSE, date_col = NULL)
+dly_ret(df, roll = 1, accumulate = FALSE, date_col = NULL)
 }
 \arguments{
 \item{df}{A data frame or xts with price data. If a data frame is given then the first column of date type will as
 the index unless it is manually set in date_col}
-
-\item{halflife}{To be implemented}
 
 \item{roll}{Rolling returns, "1 = no rolling"}
 

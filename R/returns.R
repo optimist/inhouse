@@ -96,7 +96,6 @@ tq_get_wide <- function(x, what="close", ...) {
 #' @description Daily returns for wide-form price data
 #' @param df A data frame or xts with price data. If a data frame is given then the first column of date type will as
 #' the index unless it is manually set in date_col
-#' @param halflife To be implemented
 #' @param roll Rolling returns, "1 = no rolling"
 #' @param type To be implemented
 #' @param date_col To be implemented
@@ -104,19 +103,19 @@ tq_get_wide <- function(x, what="close", ...) {
 #' tq_get_wide(c("SPY", "SHV")) %>% dly_ret()
 #' @return An object of the same class of df with the returns.
 #' @export
-dly_ret <- function(df, halflife, roll = 1, accumulate = FALSE, date_col = NULL) {
+dly_ret <- function(df, roll = 1, accumulate = FALSE, date_col = NULL) {
   is_xts_df <- is.xts(df)
   if (!is_xts_df) {
     date_col <- ifelse(is.null(date_col), which(sapply(df, class) == "Date")[1],  date_col)
     if (is.na(date_col)) stop("No date column")
     col_names <- names(df)
     date_col_name <- col_names[date_col]
-    df <- xts(df[-date_col], order.by = df[[date_col]])
+    df <- xts(df[ ,-date_col, drop = FALSE], order.by = df[ ,date_col])
     names(df) <- col_names[-date_col]
   }
   dly_ret <- df/xts::lag.xts(df)-1 # retornos
   dly_ret[is.na(dly_ret)] <- 0 # rellenar ceros
-  dly_ret <- (rollProd(dly_ret, roll)+1)^(1/roll)-1
+  if(roll > 1) dly_ret <- (rollProd(dly_ret, roll)+1)^(1/roll)-1
   if (accumulate) coredata(dly_ret) <- apply(dly_ret, 2, function(x) cumprod(x + 1) - 1)
   if (!is_xts_df) {
     dly_ret <- data.frame(fecha = index(dly_ret), dly_ret, check.names = FALSE, row.names = NULL)
@@ -125,6 +124,10 @@ dly_ret <- function(df, halflife, roll = 1, accumulate = FALSE, date_col = NULL)
   }
   return(dly_ret)
 }
+
+
+
+
 
 
 

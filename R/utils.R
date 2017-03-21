@@ -84,15 +84,17 @@ date_seq <- function(period, by = 1) {
 #' @param fill_missing_init A boolean indicating whether starting missing values should be copied to first actual value
 #' @return Filled data frame
 #' @examples
-#' price_fill(tq_get_wide("SPY,MXN=X"))
+#' fill_prices(tq_get_wide("SPY,MXN=X"))
 #' @export
-fill_prices <- function(df, fill_missing_init = TRUE) {
+fill_prices <- function(df, fill_missing_init = TRUE, date_col = NULL) {
   if (is.xts(df)) {
-    dat <- data.frame(coredata(df))
+    dat <- data.frame(df)
   } else {
-    dat <- df
+    date_col <- ifelse(is.null(date_col), which(sapply(df, class) == "Date")[1],  date_col)
+    dat <- df[order(df[ ,date_col]), ]
   }
   filled_dat <- tidyr::fill_(dat, names(dat), .direction = "down")
+  print(filled_dat)
   if (fill_missing_init) {
     filled_dat <- tidyr::fill_(filled_dat, names(filled_dat), .direction = "up")
   }
@@ -116,5 +118,22 @@ rollProd <- function(x, roll=1) {
   rollprod <- xts(rollprod, order.by=date[roll:length(date)])
   return(rollprod)
 }
+
+
+#' @title rollapply xts as it should be
+#' @description Overwrites rollapply.xts and uses rollapply.zoo for xts data
+#' @param data the data to be used (representing a series of observations).
+#' @param  ... arguments to pass to \code{\link{rollapply.zoo}}
+#' @details The function transforms
+#' @return Corces xts to zoo, then applies \code{\link{rollapply.zoo}} of \code{\link{zoo}} package and transforms back to xts
+#' @export
+rollapply.xts <- function(data, ...) {
+  data_names <- names(data)
+  out <- zoo::rollapply(zoo(data), ...)
+  out <- xts(out)
+  names(out) <- data_names
+  out
+}
+
 
 

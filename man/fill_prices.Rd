@@ -4,7 +4,7 @@
 \alias{fill_prices}
 \title{Fill data frame or xts}
 \usage{
-fill_prices(df, fill_missing_init = TRUE)
+fill_prices(df, fill_missing_init = TRUE, date_col = NULL)
 }
 \arguments{
 \item{df}{data.frame or xts with data to fill}
@@ -18,5 +18,5 @@ Filled data frame
 Fills missing data in convenient form for Finance
 }
 \examples{
-price_fill(tq_get_wide("SPY,MXN=X"))
+fill_prices(tq_get_wide("SPY,MXN=X"))
 }
