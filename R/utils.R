@@ -94,7 +94,6 @@ fill_prices <- function(df, fill_missing_init = TRUE, date_col = NULL) {
     dat <- df[order(df[ ,date_col]), ]
   }
   filled_dat <- tidyr::fill_(dat, names(dat), .direction = "down")
-  print(filled_dat)
   if (fill_missing_init) {
     filled_dat <- tidyr::fill_(filled_dat, names(filled_dat), .direction = "up")
   }
