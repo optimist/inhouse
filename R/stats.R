@@ -42,7 +42,7 @@ optimist_mean <- function(x, halflife = length(x), type=c("arithmetic", "geometr
     return(sum(wt*x))
   }
   if (type[1] == "geometric") {
-    return(exp(sum(wt*log(x))))
+    return(exp(sum(wt*log(x + 1))) - 1)
   }
 }
 
